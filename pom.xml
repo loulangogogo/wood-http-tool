@@ -22,6 +22,11 @@
         <maven.compiler.target>8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
+        <!--water-tool-->
+        <water-tool.version>0.0.1</water-tool.version>
+        <!--okhttp-->
+        <okhttp.version>4.12.0</okhttp.version>
+
         <!--打包使用-->
         <central-publishing-maven.version>0.5.0</central-publishing-maven.version>
         <maven-compiler.version>3.13.0</maven-compiler.version>
@@ -37,6 +42,20 @@
     </properties>
 
     <dependencies>
+
+        <dependency>
+            <groupId>io.github.loulangogogo</groupId>
+            <artifactId>water-tool</artifactId>
+            <version>${water-tool.version}</version>
+        </dependency>
+
+        <!--okhttp-->
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>${okhttp.version}</version>
+        </dependency>
+
         <!--日志使用-->
         <dependency>
             <groupId>org.slf4j</groupId>
