@@ -1,4 +1,4 @@
-package io.github.loulangogogo;
+package io.github.loulangogogo.ask;
 
 import io.github.loulangogogo.water.map.MapTool;
 import io.github.loulangogogo.water.tool.AssertTool;

@@ -1,11 +1,14 @@
-package io.github.loulangogogo;
+package io.github.loulangogogo.test.tool;
 
 /*********************************************************
- ** http请求的枚举方法
+ ** put工具测试类
  **
  ** @author loulan
  ** @since 8
  *********************************************************/
-public enum HttpMethod {
-    GET, POST, HEAD, PUT, DELETE, PATCH
+public class HttpToolPutTest {
+
+    public void put() {
+
+    }
 }

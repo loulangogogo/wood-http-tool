@@ -1,4 +1,4 @@
-package io.github.loulangogogo;
+package io.github.loulangogogo.ask;
 
 import io.github.loulangogogo.water.tool.AssertTool;
 import io.github.loulangogogo.water.tool.StrTool;
@@ -34,14 +34,14 @@ class WoodHttpRequestBody {
     }
 
     /**
-     * 创建文件上传请求体
+     * 创建文件上传请求体（通过{@link File}的方式）
      *
      * @param file     要进行上传的文件
      * @param bodyName 请求体参数名称
      * @return {@link RequestBody}请求体对象
      * @author :loulan
      */
-    public static RequestBody createFileRequestBody(File file, String bodyName) {
+    public static RequestBody createRequestBody(File file, String bodyName) {
         AssertTool.notEmpty(bodyName, "请求体参数名称不能为空");
         AssertTool.notNull(file, "文件不能为空");
         return new MultipartBody.Builder()
@@ -51,14 +51,14 @@ class WoodHttpRequestBody {
     }
 
     /**
-     * 创建文件上传请求体
+     * 创建文件上传请求体（通过字节数组的方式）
      *
      * @param bytes    文件字节数组
      * @param bodyName 请求体参数名称
      * @return {@link RequestBody}请求体对象
      * @author :loulan
      */
-    public static RequestBody createFileRequestBody(byte[] bytes,String fileName ,String bodyName) {
+    public static RequestBody createRequestBody(byte[] bytes,String fileName ,String bodyName) {
         AssertTool.notEmpty(bodyName, "请求体参数名称不能为空");
         AssertTool.notNull(bytes, "文件不能为空");
         AssertTool.notNull(fileName,"文件名不能为空");

@@ -1,4 +1,4 @@
-package io.github.loulangogogo;
+package io.github.loulangogogo.ask;
 
 import okhttp3.OkHttpClient;
 
@@ -8,7 +8,7 @@ import okhttp3.OkHttpClient;
  ** @author loulan
  ** @since 8
  *********************************************************/
-public class WoodHttpClient {
+class WoodHttpClient {
     private static final OkHttpClient httpClient = new OkHttpClient();
 
     /**

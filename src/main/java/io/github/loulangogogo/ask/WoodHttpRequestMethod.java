@@ -1,5 +1,6 @@
-package io.github.loulangogogo;
+package io.github.loulangogogo.ask;
 
+import io.github.loulangogogo.enums.HttpMethod;
 import io.github.loulangogogo.water.tool.AssertTool;
 import okhttp3.Request;
 import okhttp3.RequestBody;
