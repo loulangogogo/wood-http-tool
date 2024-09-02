@@ -1,7 +1,7 @@
 package io.github.loulangogogo.test.ask;
 
-import io.github.loulangogogo.enums.HttpMethod;
 import io.github.loulangogogo.ask.HttpRequestTool;
+import io.github.loulangogogo.enums.HttpMethod;
 import io.github.loulangogogo.water.io.IoTool;
 import okhttp3.Response;
 import org.junit.Test;
@@ -15,7 +15,6 @@ import java.io.*;
  ** @since
  *********************************************************/
 public class HttpRequestToolTest {
-
     /**
      * get请求
      * @param

@@ -14,7 +14,7 @@ import java.util.Map;
  ** @author loulan
  ** @since 8
  *********************************************************/
-interface HttpToolDelete {
+class HttpToolDelete {
 
     /**
      * delete请求
@@ -23,8 +23,8 @@ interface HttpToolDelete {
      * @return 请求体的字符串数据
      * @author :loulan
      */
-    public static String deleteStr(String url) {
-        return deleteStr(url, null, null);
+    public static String toStr(String url) {
+        return toStr(url, null, null);
     }
 
     /**
@@ -34,8 +34,8 @@ interface HttpToolDelete {
      * @return 响应对象
      * @author :loulan
      */
-    public static Response delete(String url) {
-        return delete(url, null, null);
+    public static Response request(String url) {
+        return request(url, null, null);
     }
 
     /**
@@ -47,8 +47,8 @@ interface HttpToolDelete {
      * @return 请求体的字符串数据
      * @author :loulan
      */
-    public static String deleteStr(String url, Map<String, String> params, Map<String, String> headers) {
-        Response responese = delete(url, params, headers);
+    public static String toStr(String url, Map<String, String> params, Map<String, String> headers) {
+        Response responese = request(url, params, headers);
         return HttpResponseTool.toStr(responese);
     }
 
@@ -61,7 +61,7 @@ interface HttpToolDelete {
      * @return 响应对象
      * @author :loulan
      */
-    public static Response delete(String url, Map<String, String> params, Map<String, String> headers) {
+    public static Response request(String url, Map<String, String> params, Map<String, String> headers) {
         return HttpRequestTool.request(url, HttpMethod.DELETE, headers, params, null);
     }
 }
