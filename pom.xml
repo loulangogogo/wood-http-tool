@@ -23,7 +23,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <!--water-tool-->
-        <water-tool.version>0.0.3</water-tool.version>
+        <water-tool.version>0.0.4</water-tool.version>
         <!--okhttp-->
         <okhttp.version>4.12.0</okhttp.version>
 
