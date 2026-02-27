@@ -7,6 +7,7 @@ import okhttp3.Response;
 
 import java.io.File;
 import java.io.InputStream;
+import java.time.Duration;
 import java.util.Map;
 
 /*********************************************************
@@ -223,6 +224,22 @@ class HttpToolPost {
     }
 
     /**
+     * post请求
+     *
+     * @param url     请求的url,不能为空
+     * @param params  请求的参数
+     * @param headers 请求头
+     * @param body    请求体的json数据
+     * @param timeout 请求超时时间
+     * @param isLog   是否打印请求日志
+     * @return 响应对象
+     * @author :loulan
+     */
+    public static Response request(String url, Map<String, String> params, Map<String, String> headers, String body, Duration timeout, boolean isLog) {
+        return HttpRequestTool.request(url, HttpMethod.POST, headers, params, body, timeout, isLog);
+    }
+
+    /**
      * 上传文件的post的请求
      *
      * @param url      请求的url,不能为空
@@ -257,6 +274,24 @@ class HttpToolPost {
      * 上传文件的post的请求
      *
      * @param url      请求的url,不能为空
+     * @param params   请求的参数
+     * @param headers  请求头
+     * @param bodyFile 上传的文件字节数组
+     * @param fileName 文件名
+     * @param bodyName 请求体名称
+     * @param timeout  请求超时时间
+     * @param isLog    是否打印请求日志
+     * @return 响应对象
+     * @author :loulan
+     */
+    public static Response uploadFile(String url, Map<String, String> params, Map<String, String> headers, byte[] bodyFile, String fileName, String bodyName, Duration timeout, boolean isLog) {
+        return HttpRequestTool.uploadFile(url, HttpMethod.POST, headers, params, bodyFile, fileName, bodyName, timeout, isLog);
+    }
+
+    /**
+     * 上传文件的post的请求
+     *
+     * @param url      请求的url,不能为空
      * @param headers  请求头
      * @param bodyFile 上传的文件
      * @param bodyName 请求体名称
@@ -280,5 +315,22 @@ class HttpToolPost {
      */
     public static Response uploadFile(String url, Map<String, String> params, Map<String, String> headers, File bodyFile, String bodyName) {
         return HttpRequestTool.uploadFile(url, HttpMethod.POST, headers, params, bodyFile, bodyName);
+    }
+
+    /**
+     * 上传文件的post的请求
+     *
+     * @param url      请求的url,不能为空
+     * @param params   请求的参数
+     * @param headers  请求头
+     * @param bodyFile 上传的文件
+     * @param bodyName 请求体名称
+     * @param timeout  请求超时时间
+     * @param isLog    是否打印请求日志
+     * @return 响应对象
+     * @author :loulan
+     */
+    public static Response uploadFile(String url, Map<String, String> params, Map<String, String> headers, File bodyFile, String bodyName, Duration timeout, boolean isLog) {
+        return HttpRequestTool.uploadFile(url, HttpMethod.POST, headers, params, bodyFile, bodyName, timeout, isLog);
     }
 }

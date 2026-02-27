@@ -7,6 +7,7 @@ import okhttp3.Response;
 
 import java.io.File;
 import java.io.InputStream;
+import java.time.Duration;
 import java.util.Map;
 
 /*********************************************************
@@ -66,7 +67,7 @@ class HttpToolPut {
      * 使用默认消息转换器执行PUT请求，并返回响应字符串
      * 此方法重载了带转换器的toStr方法
      *
-     * @param url 请求的URL,不能为空
+     * @param url     请求的URL,不能为空
      * @param headers 请求头信息，如果为null，则不添加任何请求头
      * @return 响应字符串
      */
@@ -78,7 +79,7 @@ class HttpToolPut {
      * 使用默认消息转换器执行PUT请求，并返回响应的字节数组
      * 此方法重载了带转换器的toByteArray方法
      *
-     * @param url 请求的URL,不能为空
+     * @param url     请求的URL,不能为空
      * @param headers 请求头信息，如果为null，则不添加任何请求头
      * @return 响应的字节数组
      */
@@ -90,7 +91,7 @@ class HttpToolPut {
      * 使用默认消息转换器执行PUT请求，并返回响应的输入流
      * 此方法重载了带转换器的toInputStream方法
      *
-     * @param url 请求的URL,不能为空
+     * @param url     请求的URL,不能为空
      * @param headers 请求头信息，如果为null，则不添加任何请求头
      * @return 响应的输入流
      */
@@ -102,7 +103,7 @@ class HttpToolPut {
      * 使用默认消息转换器执行PUT请求，并返回响应对象
      * 此方法重载了带转换器的request方法
      *
-     * @param url 请求的URL,不能为空
+     * @param url     请求的URL,不能为空
      * @param headers 请求头信息，如果为null，则不添加任何请求头
      * @return 响应对象
      */
@@ -223,6 +224,22 @@ class HttpToolPut {
     }
 
     /**
+     * put请求
+     *
+     * @param url     请求的url,不能为空
+     * @param params  请求的参数
+     * @param headers 请求头
+     * @param body    请求的正文内容,可以为null
+     * @param timeout 请求超时时间
+     * @param isLog   是否打印请求日志
+     * @return 响应对象
+     * @author :loulan
+     */
+    public static Response request(String url, Map<String, String> params, Map<String, String> headers, String body, Duration timeout, boolean isLog) {
+        return HttpRequestTool.request(url, HttpMethod.PUT, headers, params, body, timeout, isLog);
+    }
+
+    /**
      * 上传文件的put的请求
      *
      * @param url      请求的url,不能为空
@@ -257,6 +274,24 @@ class HttpToolPut {
      * 上传文件的put的请求
      *
      * @param url      请求的url,不能为空
+     * @param params   请求的参数
+     * @param headers  请求头
+     * @param bodyFile 上传的文件字节数组
+     * @param fileName 文件名
+     * @param bodyName 请求体名称
+     * @param timeout  请求超时时间
+     * @param isLog    是否打印请求日志
+     * @return 响应对象
+     * @author :loulan
+     */
+    public static Response uploadFile(String url, Map<String, String> params, Map<String, String> headers, byte[] bodyFile, String fileName, String bodyName, Duration timeout, boolean isLog) {
+        return HttpRequestTool.uploadFile(url, HttpMethod.PUT, headers, params, bodyFile, fileName, bodyName, timeout, isLog);
+    }
+
+    /**
+     * 上传文件的put的请求
+     *
+     * @param url      请求的url,不能为空
      * @param headers  请求头
      * @param bodyFile 上传的文件
      * @param bodyName 请求体名称
@@ -280,5 +315,22 @@ class HttpToolPut {
      */
     public static Response uploadFile(String url, Map<String, String> params, Map<String, String> headers, File bodyFile, String bodyName) {
         return HttpRequestTool.uploadFile(url, HttpMethod.PUT, headers, params, bodyFile, bodyName);
+    }
+
+    /**
+     * 上传文件的put的请求
+     *
+     * @param url      请求的url,不能为空
+     * @param params   请求的参数
+     * @param headers  请求头
+     * @param bodyFile 上传的文件
+     * @param bodyName 请求体名称
+     * @param timeout  请求超时时间
+     * @param isLog    是否打印请求日志
+     * @return 响应对象
+     * @author :loulan
+     */
+    public static Response uploadFile(String url, Map<String, String> params, Map<String, String> headers, File bodyFile, String bodyName, Duration timeout, boolean isLog) {
+        return HttpRequestTool.uploadFile(url, HttpMethod.PUT, headers, params, bodyFile, bodyName, timeout, isLog);
     }
 }

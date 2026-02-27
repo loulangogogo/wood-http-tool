@@ -3,12 +3,14 @@ package io.github.loulangogogo.ask;
 import io.github.loulangogogo.enums.HttpMethod;
 import io.github.loulangogogo.exception.WoodRequestException;
 import io.github.loulangogogo.water.tool.AssertTool;
+import io.github.loulangogogo.water.tool.ObjectTool;
 import okhttp3.Call;
 import okhttp3.Request;
 import okhttp3.Response;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.Duration;
 import java.util.Map;
 
 /*********************************************************
@@ -41,6 +43,35 @@ public class HttpRequestTool {
             String fileName,
             String bodyName
     ) {
+        return uploadFile(url, method, headers, params, bodyFile, fileName, bodyName, WoodHttpClient.defaultTimeout, WoodHttpClient.defaultIsLog);
+    }
+
+    /**
+     * 通过字节数组的方式上传文件。
+     *
+     * @param url      请求地址，不能为空
+     * @param method   请求方法，不能为空
+     * @param headers  请求头
+     * @param params   请求参数
+     * @param bodyFile 要上传的文件字节数组，不能为空
+     * @param fileName 文件名称，不能为空
+     * @param bodyName 请求体参数名称，不能为空
+     * @param timeout  请求超时时间
+     * @param isLog    是否打印请求日志
+     * @return {@link Response}响应对象
+     * @author :loulan
+     */
+    public static Response uploadFile(
+            String url,
+            HttpMethod method,
+            Map<String, String> headers,
+            Map<String, String> params,
+            byte[] bodyFile,
+            String fileName,
+            String bodyName,
+            Duration timeout,
+            Boolean isLog
+    ) {
         AssertTool.notEmpty(url, "url不能为空");
         AssertTool.notNull(method, "请求方法不能为空");
         AssertTool.isTrue(
@@ -60,12 +91,11 @@ public class HttpRequestTool {
         WoodHttpRequestMethod.setMethod(requestBuilder, method, WoodHttpRequestBody.createRequestBody(bodyFile, fileName, bodyName));
 
         try {
-            return request(requestBuilder.build());
+            return request(requestBuilder.build(), timeout, isLog);
         } catch (Exception ex) {
             throw new WoodRequestException(ex);
         }
     }
-
 
     /**
      * 通过{@link File}进行文件上传
@@ -87,6 +117,34 @@ public class HttpRequestTool {
             File bodyFile,
             String bodyName
     ) {
+        return uploadFile(url, method, headers, params, bodyFile, bodyName, WoodHttpClient.defaultTimeout, WoodHttpClient.defaultIsLog);
+    }
+
+
+    /**
+     * 通过{@link File}进行文件上传
+     *
+     * @param url      请求地址，不能为空
+     * @param method   请求方法，不能为空
+     * @param headers  请求头
+     * @param params   请求参数
+     * @param bodyFile 要上传的文件，不能为空
+     * @param bodyName 请求体参数名称，不能为空
+     * @param timeout  请求超时时间
+     * @param isLog    是否打印请求日志
+     * @return {@link Response}响应对象
+     * @author :loulan
+     */
+    public static Response uploadFile(
+            String url,
+            HttpMethod method,
+            Map<String, String> headers,
+            Map<String, String> params,
+            File bodyFile,
+            String bodyName,
+            Duration timeout,
+            Boolean isLog
+    ) {
         AssertTool.notEmpty(url, "url不能为空");
         AssertTool.notNull(method, "请求方法不能为空");
         AssertTool.isTrue(
@@ -105,12 +163,11 @@ public class HttpRequestTool {
         WoodHttpRequestMethod.setMethod(requestBuilder, method, WoodHttpRequestBody.createRequestBody(bodyFile, bodyName));
 
         try {
-            return request(requestBuilder.build());
+            return request(requestBuilder.build(), timeout, isLog);
         } catch (Exception ex) {
             throw new WoodRequestException(ex);
         }
     }
-
 
     /**
      * 发起请求
@@ -130,6 +187,31 @@ public class HttpRequestTool {
             Map<String, String> params,
             String body
     ) {
+        return request(url, method, headers, params, body, WoodHttpClient.defaultTimeout, WoodHttpClient.defaultIsLog);
+    }
+
+    /**
+     * 发起请求
+     *
+     * @param url     请求地址，不能为空
+     * @param method  请求方法，不能为空
+     * @param headers 请求头
+     * @param params  请求参数
+     * @param body    请求体（json数据请求体）
+     * @param timeout 请求超时时间
+     * @param isLog   是否打印请求日志
+     * @return {@link Response}响应对象
+     * @author :loulan
+     */
+    public static Response request(
+            String url,
+            HttpMethod method,
+            Map<String, String> headers,
+            Map<String, String> params,
+            String body,
+            Duration timeout,
+            Boolean isLog
+    ) {
         AssertTool.notEmpty(url, "url不能为空");
         AssertTool.notNull(method, "请求方法不能为空");
         // 创建请求构建对象，并设置请求参数
@@ -140,7 +222,7 @@ public class HttpRequestTool {
         WoodHttpRequestMethod.setMethod(requestBuilder, method, WoodHttpRequestBody.createRequestBody(body));
 
         try {
-            return request(requestBuilder.build());
+            return request(requestBuilder.build(), timeout, isLog);
         } catch (Exception ex) {
             throw new WoodRequestException(ex);
         }
@@ -173,6 +255,29 @@ public class HttpRequestTool {
      */
     private static Response request(Request request) throws IOException {
         Call call = WoodHttpClient.getHttpClient().newCall(request);
+        return call.execute();
+    }
+
+    /**
+     * 发起请求
+     *
+     * @param request 请求对象
+     * @param timeout 请求超时时间
+     * @param isLog   是否打印请求日志
+     * @return 响应结果对象
+     * @throws IOException 请求失败
+     * @author :loulan
+     */
+    private static Response request(Request request, Duration timeout, Boolean isLog) throws IOException {
+        if (ObjectTool.isNull( timeout)) timeout = WoodHttpClient.defaultTimeout;
+        if (ObjectTool.isNull(isLog)) isLog = WoodHttpClient.defaultIsLog;
+
+        Call call = WoodHttpClient.builder()
+                .connectTimeout(timeout)
+                .readTimeout(timeout)
+                .isLog(isLog)
+                .build()
+                .newCall(request);
         return call.execute();
     }
 }
