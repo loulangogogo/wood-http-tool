@@ -40,15 +40,15 @@ public class HttpResponseTool {
      * @author :loulan
      */
     public static byte[] toByteArray(Response response) {
-        ResponseBody responseBody = getResponseBody(response);
-        if (ObjectTool.isNull(responseBody)) {
-            return null;
-        } else {
-            try {
-                return responseBody.bytes();
-            } catch (IOException ex) {
-                throw new WoodRequestException(ex);
+        try (ResponseBody responseBody = getResponseBody(response)){
+            if (ObjectTool.isNull(responseBody)) {
+                return null;
             }
+            return responseBody.bytes();
+        } catch (Exception ex) {
+            throw new WoodRequestException(ex);
+        }finally {
+            response.close();
         }
     }
 
@@ -60,15 +60,15 @@ public class HttpResponseTool {
      * @author :loulan
      */
     public static String toStr(Response response) {
-        ResponseBody responseBody = getResponseBody(response);
-        if (ObjectTool.isNull(responseBody)) {
-            return null;
-        } else {
-            try {
-                return responseBody.string();
-            } catch (IOException ex) {
-                throw new WoodRequestException(ex);
+        try (ResponseBody responseBody = getResponseBody(response)){
+            if (ObjectTool.isNull(responseBody)) {
+                return null;
             }
+            return responseBody.string();
+        } catch (Exception ex) {
+            throw new WoodRequestException(ex);
+        }finally {
+            response.close();
         }
     }
 
