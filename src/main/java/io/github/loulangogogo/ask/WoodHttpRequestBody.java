@@ -24,7 +24,7 @@ class WoodHttpRequestBody {
      * @author :loulan
      */
     public static RequestBody createRequestBody(String body) {
-        // 生成请求体，如果body存在就正常盛昌，如果不存在就生成空请求体
+        // 生成请求体，如果body存在就正常生成，如果不存在就生成空请求体
         RequestBody requestBody = RequestBody.create(
                 StrTool.isNotEmpty(body) ? body : "",
                 MediaType.get("application/json; charset=utf-8")

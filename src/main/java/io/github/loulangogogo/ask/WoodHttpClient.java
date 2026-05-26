@@ -170,8 +170,6 @@ class WoodHttpClient {
             if (isLog==Boolean.TRUE) {
                 // 生产环境建议 BASIC 或 NONE
                 clientBuilder.addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY));
-            } else {
-                clientBuilder.addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.NONE));
             }
             return this;
         }
