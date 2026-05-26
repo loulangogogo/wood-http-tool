@@ -14,6 +14,9 @@ import static org.junit.Assert.*;
  */
 public class WoodHttpRequestHeaderTest {
 
+    /**
+     * 测试设置多个请求头后能正确读取
+     */
     @Test
     public void testSetMultipleHeaders() {
         Request.Builder builder = new Request.Builder();
@@ -28,6 +31,9 @@ public class WoodHttpRequestHeaderTest {
         assertEquals("application/json", request.header("Content-Type"));
     }
 
+    /**
+     * 测试设置空请求头映射时不影响 builder 构建
+     */
     @Test
     public void testSetEmptyHeadersDoesNotAffectBuilder() {
         Request.Builder builder = new Request.Builder();
@@ -38,6 +44,9 @@ public class WoodHttpRequestHeaderTest {
         assertNotNull(request);
     }
 
+    /**
+     * 测试设置 null 请求头时不影响 builder 构建
+     */
     @Test
     public void testSetNullHeadersDoesNotAffectBuilder() {
         Request.Builder builder = new Request.Builder();
@@ -47,6 +56,9 @@ public class WoodHttpRequestHeaderTest {
         assertNotNull(request);
     }
 
+    /**
+     * 测试传入 null builder 时应抛出异常
+     */
     @Test(expected = Exception.class)
     public void testNullBuilderThrowsException() {
         WoodHttpRequestHeader.setHeader(null, new HashMap<String, String>());

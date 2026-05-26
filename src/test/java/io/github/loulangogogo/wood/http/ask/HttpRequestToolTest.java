@@ -37,6 +37,9 @@ public class HttpRequestToolTest {
         server.shutdown();
     }
 
+    /**
+     * 测试GET请求能正常发送并返回200状态码
+     */
     @Test
     public void testGetRequest() throws IOException {
         server.enqueue(new MockResponse().setBody("{\"status\":\"ok\"}").setResponseCode(200));
@@ -46,6 +49,9 @@ public class HttpRequestToolTest {
         }
     }
 
+    /**
+     * 测试POST请求携带body时能正常发送并返回201状态码
+     */
     @Test
     public void testPostRequestWithBody() throws IOException {
         server.enqueue(new MockResponse().setBody("{\"id\":1}").setResponseCode(201));
@@ -55,6 +61,9 @@ public class HttpRequestToolTest {
         }
     }
 
+    /**
+     * 测试PUT请求携带body时能正常发送并返回200状态码
+     */
     @Test
     public void testPutRequest() throws IOException {
         server.enqueue(new MockResponse().setBody("{\"updated\":true}").setResponseCode(200));
@@ -64,6 +73,9 @@ public class HttpRequestToolTest {
         }
     }
 
+    /**
+     * 测试DELETE请求能正常发送并返回204状态码
+     */
     @Test
     public void testDeleteRequest() throws IOException {
         server.enqueue(new MockResponse().setResponseCode(204));
@@ -73,6 +85,9 @@ public class HttpRequestToolTest {
         }
     }
 
+    /**
+     * 测试携带请求头的请求能正常发送
+     */
     @Test
     public void testRequestWithHeaders() throws IOException {
         server.enqueue(new MockResponse().setBody("ok").setResponseCode(200));
@@ -84,6 +99,9 @@ public class HttpRequestToolTest {
         }
     }
 
+    /**
+     * 测试携带查询参数的请求能正常发送
+     */
     @Test
     public void testRequestWithParams() throws IOException {
         server.enqueue(new MockResponse().setBody("ok").setResponseCode(200));
@@ -96,6 +114,9 @@ public class HttpRequestToolTest {
         }
     }
 
+    /**
+     * 测试自定义超时时间的请求能正常发送
+     */
     @Test
     public void testRequestWithTimeout() throws IOException {
         server.enqueue(new MockResponse().setBody("ok").setResponseCode(200));
@@ -107,6 +128,9 @@ public class HttpRequestToolTest {
         }
     }
 
+    /**
+     * 测试开启日志的请求能正常发送
+     */
     @Test
     public void testRequestWithLogging() throws IOException {
         server.enqueue(new MockResponse().setBody("ok").setResponseCode(200));
@@ -118,51 +142,81 @@ public class HttpRequestToolTest {
         }
     }
 
+    /**
+     * 测试传入null url时应抛出异常
+     */
     @Test(expected = Exception.class)
     public void testRequestWithNullUrlThrowsException() {
         HttpRequestTool.request(null, HttpMethod.GET, null, null, null);
     }
 
+    /**
+     * 测试传入空url时应抛出异常
+     */
     @Test(expected = Exception.class)
     public void testRequestWithEmptyUrlThrowsException() {
         HttpRequestTool.request("", HttpMethod.GET, null, null, null);
     }
 
+    /**
+     * 测试传入null请求方法时应抛出异常
+     */
     @Test(expected = Exception.class)
     public void testRequestWithNullMethodThrowsException() {
         HttpRequestTool.request(baseUrl, null, null, null, null);
     }
 
+    /**
+     * 测试上传文件时传入null url应抛出异常
+     */
     @Test(expected = Exception.class)
     public void testUploadFileWithNullUrlThrowsException() {
         HttpRequestTool.uploadFile(null, HttpMethod.POST, null, null, new byte[]{1}, "test.txt", "file");
     }
 
+    /**
+     * 测试上传文件时传入null方法应抛出异常
+     */
     @Test(expected = Exception.class)
     public void testUploadFileWithNullMethodThrowsException() {
         HttpRequestTool.uploadFile(baseUrl, null, null, null, new byte[]{1}, "test.txt", "file");
     }
 
+    /**
+     * 测试上传文件时使用GET方法应抛出异常
+     */
     @Test(expected = Exception.class)
     public void testUploadFileWithGetMethodThrowsException() {
         HttpRequestTool.uploadFile(baseUrl, HttpMethod.GET, null, null, new byte[]{1}, "test.txt", "file");
     }
 
+    /**
+     * 测试上传文件时传入null字节数组应抛出异常
+     */
     @Test(expected = Exception.class)
     public void testUploadFileWithNullBodyFileThrowsException() {
         HttpRequestTool.uploadFile(baseUrl, HttpMethod.POST, null, null, (byte[]) null, "test.txt", "file");
     }
 
+    /**
+     * 测试上传文件时传入null文件名应抛出异常
+     */
     @Test(expected = Exception.class)
     public void testUploadFileWithNullFileNameThrowsException() {
         HttpRequestTool.uploadFile(baseUrl, HttpMethod.POST, null, null, new byte[]{1}, null, "file");
     }
 
+    /**
+     * 测试上传文件时传入null请求体名称应抛出异常
+     */
     @Test(expected = Exception.class)
     public void testUploadFileWithNullBodyNameThrowsException() {
         HttpRequestTool.uploadFile(baseUrl, HttpMethod.POST, null, null, new byte[]{1}, "test.txt", null);
     }
 
+    /**
+     * 测试使用字节数组上传文件能正常发送并返回200状态码
+     */
     @Test
     public void testUploadFileBytes() throws IOException {
         server.enqueue(new MockResponse().setBody("{\"uploaded\":true}").setResponseCode(200));

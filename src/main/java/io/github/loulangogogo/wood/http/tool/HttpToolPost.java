@@ -65,6 +65,54 @@ class HttpToolPost {
     }
 
     /**
+     * 使用指定的URL和请求体发送POST请求，返回响应的字符串表示
+     * 此方法重载了toStr方法，简化调用时不需要提供params和headers
+     *
+     * @param url  请求的URL
+     * @param body 请求的正文
+     * @return 服务器响应的字符串
+     */
+    public static String toStr(String url, String body) {
+        return toStr(url, null, null, body);
+    }
+
+    /**
+     * 使用指定的URL和请求体发送POST请求，返回响应的字节数组
+     * 此方法重载了toByteArray方法，简化调用时不需要提供params和headers
+     *
+     * @param url  请求的URL
+     * @param body 请求的正文
+     * @return 服务器响应的字节数组
+     */
+    public static byte[] toByteArray(String url, String body) {
+        return toByteArray(url, null, null, body);
+    }
+
+    /**
+     * 使用指定的URL和请求体发送POST请求，返回响应的输入流
+     * 此方法重载了toInputStream方法，简化调用时不需要提供params和headers
+     *
+     * @param url  请求的URL
+     * @param body 请求的正文
+     * @return 服务器响应的输入流
+     */
+    public static InputStream toInputStream(String url, String body) {
+        return toInputStream(url, null, null, body);
+    }
+
+    /**
+     * 使用指定的URL和请求体发送POST请求，返回完整的响应对象
+     * 此方法重载了request方法，简化调用时不需要提供params和headers
+     *
+     * @param url  请求的URL
+     * @param body 请求的正文
+     * @return 包含服务器响应的Response对象
+     */
+    public static Response request(String url, String body) {
+        return request(url, null, null, body);
+    }
+
+    /**
      * 使用指定的URL和头部信息执行一个POST请求，返回响应的字符串表示
      * 此方法重载了toStr方法，简化调用时不需要提供body和额外参数
      *

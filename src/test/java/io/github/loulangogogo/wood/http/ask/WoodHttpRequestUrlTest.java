@@ -15,6 +15,9 @@ import static org.junit.Assert.*;
  */
 public class WoodHttpRequestUrlTest {
 
+    /**
+     * 测试 http 协议的 URL 能正确解析 scheme、host 和 path
+     */
     @Test
     public void testUrlWithHttpProtocol() {
         HttpUrl result = WoodHttpRequestUrl.createUrl("http://example.com/api", null);
@@ -24,6 +27,9 @@ public class WoodHttpRequestUrlTest {
         assertEquals("/api", result.encodedPath());
     }
 
+    /**
+     * 测试 https 协议的 URL 能正确解析 scheme
+     */
     @Test
     public void testUrlWithHttpsProtocol() {
         HttpUrl result = WoodHttpRequestUrl.createUrl("https://example.com/api", null);
@@ -31,6 +37,9 @@ public class WoodHttpRequestUrlTest {
         assertEquals("https", result.scheme());
     }
 
+    /**
+     * 测试不带协议的 URL 应自动添加 http 前缀
+     */
     @Test
     public void testUrlWithoutProtocolAddsHttp() {
         HttpUrl result = WoodHttpRequestUrl.createUrl("example.com/api", null);
@@ -39,6 +48,9 @@ public class WoodHttpRequestUrlTest {
         assertEquals("example.com", result.host());
     }
 
+    /**
+     * 测试 URL 携带查询参数时能正确拼接
+     */
     @Test
     public void testUrlWithParams() {
         Map<String, String> params = new HashMap<>();
@@ -51,6 +63,9 @@ public class WoodHttpRequestUrlTest {
         assertEquals("value2", result.queryParameter("key2"));
     }
 
+    /**
+     * 测试 URL 已有查询参数时，新增参数能正确追加
+     */
     @Test
     public void testUrlWithParamsAndExistingQuery() {
         Map<String, String> params = new HashMap<>();
@@ -62,6 +77,9 @@ public class WoodHttpRequestUrlTest {
         assertEquals("param", result.queryParameter("extra"));
     }
 
+    /**
+     * 测试 URL 前后包含空白字符时能正确 trim 后解析
+     */
     @Test
     public void testUrlWithWhitespaceProtocol() {
         HttpUrl result = WoodHttpRequestUrl.createUrl("  https://example.com  ", null);
@@ -69,22 +87,33 @@ public class WoodHttpRequestUrlTest {
         assertEquals("https", result.scheme());
     }
 
+    /**
+     * 测试无效 URL 应抛出异常（Bug1检测：修复前抛NPE，修复后抛IllegalArgumentException）
+     */
     @Test(expected = Exception.class)
     public void testInvalidUrlThrowsException() {
-        // Bug1 检测：修复前应抛 NPE，修复后应抛 IllegalArgumentException
         WoodHttpRequestUrl.createUrl("::not-a-valid-url::", null);
     }
 
+    /**
+     * 测试 null URL 应抛出异常
+     */
     @Test(expected = Exception.class)
     public void testNullUrlThrowsException() {
         WoodHttpRequestUrl.createUrl(null, null);
     }
 
+    /**
+     * 测试空字符串 URL 应抛出异常
+     */
     @Test(expected = Exception.class)
     public void testEmptyUrlThrowsException() {
         WoodHttpRequestUrl.createUrl("", null);
     }
 
+    /**
+     * 测试纯空白 URL 应抛出异常
+     */
     @Test(expected = Exception.class)
     public void testBlankUrlThrowsException() {
         WoodHttpRequestUrl.createUrl("   ", null);

@@ -26,7 +26,18 @@ class HttpToolPut {
      * @return 服务器的响应，作为字符串
      */
     public static String toStr(String url) {
-        return toStr(url, null);
+        return toStr(url, (String) null);
+    }
+
+    /**
+     * 向指定的URL发送PUT请求（带请求体），并接收字符串响应
+     *
+     * @param url  目标服务器的URL，不能为空
+     * @param body 请求的正文内容，可以为null
+     * @return 服务器的响应，作为字符串
+     */
+    public static String toStr(String url, String body) {
+        return toStr(url, null, body);
     }
 
     /**
@@ -37,7 +48,18 @@ class HttpToolPut {
      * @return 服务器的响应，作为字节数组
      */
     public static byte[] toByteArray(String url) {
-        return toByteArray(url, null);
+        return toByteArray(url, (String) null);
+    }
+
+    /**
+     * 向指定的URL发送PUT请求（带请求体），并接收字节数组响应
+     *
+     * @param url  目标服务器的URL，不能为空
+     * @param body 请求的正文内容，可以为null
+     * @return 服务器的响应，作为字节数组
+     */
+    public static byte[] toByteArray(String url, String body) {
+        return toByteArray(url, null, body);
     }
 
     /**
@@ -48,7 +70,18 @@ class HttpToolPut {
      * @return 服务器的响应，作为输入流
      */
     public static InputStream toInputStream(String url) {
-        return toInputStream(url, null);
+        return toInputStream(url, (String) null);
+    }
+
+    /**
+     * 向指定的URL发送PUT请求（带请求体），并接收输入流响应
+     *
+     * @param url  目标服务器的URL，不能为空
+     * @param body 请求的正文内容，可以为null
+     * @return 服务器的响应，作为输入流
+     */
+    public static InputStream toInputStream(String url, String body) {
+        return toInputStream(url, null, body);
     }
 
     /**
@@ -59,7 +92,18 @@ class HttpToolPut {
      * @return 响应对象，包含服务器的响应信息
      */
     public static Response request(String url) {
-        return request(url, null);
+        return request(url, (String) null);
+    }
+
+    /**
+     * 向指定的URL发送PUT请求（带请求体），并接收响应对象
+     *
+     * @param url  目标服务器的URL，不能为空
+     * @param body 请求的正文内容，可以为null
+     * @return 响应对象，包含服务器的响应信息
+     */
+    public static Response request(String url, String body) {
+        return request(url, null, body);
     }
 
 

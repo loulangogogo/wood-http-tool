@@ -36,24 +36,36 @@ public class HttpToolGetTest {
         server.shutdown();
     }
 
+    /**
+     * 测试仅传入url时，toStr方法能正确返回响应体字符串
+     */
     @Test
     public void testToStr() throws IOException {
         server.enqueue(new MockResponse().setBody("hello").setResponseCode(200));
         assertEquals("hello", HttpToolGet.toStr(baseUrl));
     }
 
+    /**
+     * 测试仅传入url时，toByteArray方法能正确返回响应体字节数组
+     */
     @Test
     public void testToByteArray() throws IOException {
         server.enqueue(new MockResponse().setBody("binary").setResponseCode(200));
         assertArrayEquals("binary".getBytes(StandardCharsets.UTF_8), HttpToolGet.toByteArray(baseUrl));
     }
 
+    /**
+     * 测试仅传入url时，toInputStream方法能正确返回响应体输入流
+     */
     @Test
     public void testToInputStream() throws IOException {
         server.enqueue(new MockResponse().setBody("stream").setResponseCode(200));
         assertNotNull(HttpToolGet.toInputStream(baseUrl));
     }
 
+    /**
+     * 测试仅传入url时，request方法能正确返回响应对象且状态码为200
+     */
     @Test
     public void testRequest() throws IOException {
         server.enqueue(new MockResponse().setBody("ok").setResponseCode(200));
@@ -62,6 +74,9 @@ public class HttpToolGetTest {
         }
     }
 
+    /**
+     * 测试同时传入params和headers时，toStr方法能正确返回响应体字符串
+     */
     @Test
     public void testToStrWithParamsAndHeaders() throws IOException {
         server.enqueue(new MockResponse().setBody("ok").setResponseCode(200));
@@ -72,6 +87,9 @@ public class HttpToolGetTest {
         assertEquals("ok", HttpToolGet.toStr(baseUrl, params, headers));
     }
 
+    /**
+     * 测试同时传入params和headers时，toByteArray方法能正确返回响应体字节数组
+     */
     @Test
     public void testToByteArrayWithParamsAndHeaders() throws IOException {
         server.enqueue(new MockResponse().setBody("{\"id\":1}").setResponseCode(200));
@@ -79,12 +97,18 @@ public class HttpToolGetTest {
         assertTrue(new String(result).contains("id"));
     }
 
+    /**
+     * 测试同时传入params和headers时，toInputStream方法能正确返回响应体输入流
+     */
     @Test
     public void testToInputStreamWithParamsAndHeaders() throws IOException {
         server.enqueue(new MockResponse().setBody("stream").setResponseCode(200));
         assertNotNull(HttpToolGet.toInputStream(baseUrl, new HashMap<>(), new HashMap<>()));
     }
 
+    /**
+     * 测试同时传入params和headers时，request方法能正确返回响应对象
+     */
     @Test
     public void testRequestWithParamsAndHeaders() throws IOException {
         server.enqueue(new MockResponse().setResponseCode(200));
@@ -93,6 +117,52 @@ public class HttpToolGetTest {
         }
     }
 
+    /**
+     * 测试仅传入url和params时，toStr方法能正确返回响应体字符串
+     */
+    @Test
+    public void testToStrWithParams() throws IOException {
+        server.enqueue(new MockResponse().setBody("ok").setResponseCode(200));
+        Map<String, String> params = new HashMap<>();
+        params.put("key", "value");
+        assertEquals("ok", HttpToolGet.toStr(baseUrl, params));
+    }
+
+    /**
+     * 测试仅传入url和params时，toByteArray方法能正确返回响应体字节数组
+     */
+    @Test
+    public void testToByteArrayWithParams() throws IOException {
+        server.enqueue(new MockResponse().setBody("{\"id\":1}").setResponseCode(200));
+        byte[] result = HttpToolGet.toByteArray(baseUrl, new HashMap<>());
+        assertTrue(new String(result).contains("id"));
+    }
+
+    /**
+     * 测试仅传入url和params时，toInputStream方法能正确返回响应体输入流
+     */
+    @Test
+    public void testToInputStreamWithParams() throws IOException {
+        server.enqueue(new MockResponse().setBody("stream").setResponseCode(200));
+        assertNotNull(HttpToolGet.toInputStream(baseUrl, new HashMap<>()));
+    }
+
+    /**
+     * 测试仅传入url和params时，request方法能正确返回响应对象
+     */
+    @Test
+    public void testRequestWithParams() throws IOException {
+        server.enqueue(new MockResponse().setResponseCode(200));
+        Map<String, String> params = new HashMap<>();
+        params.put("foo", "bar");
+        try (Response response = HttpToolGet.request(baseUrl, params)) {
+            assertEquals(200, response.code());
+        }
+    }
+
+    /**
+     * 测试传入超时时间和日志开关时，request方法能正确返回响应对象
+     */
     @Test
     public void testRequestWithTimeoutAndLog() throws IOException {
         server.enqueue(new MockResponse().setBody("ok").setResponseCode(200));

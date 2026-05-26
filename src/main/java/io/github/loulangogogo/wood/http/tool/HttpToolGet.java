@@ -64,6 +64,54 @@ public class HttpToolGet {
     /**
      * get请求
      *
+     * @param url    请求的url,不能为空
+     * @param params 请求的参数
+     * @return 响应体的字符串数据
+     * @author :loulan
+     */
+    public static String toStr(String url, Map<String, String> params) {
+        return toStr(url, params, null);
+    }
+
+    /**
+     * get请求
+     *
+     * @param url    请求的url,不能为空
+     * @param params 请求的参数
+     * @return 响应体的字节数组
+     * @author :loulan
+     */
+    public static byte[] toByteArray(String url, Map<String, String> params) {
+        return toByteArray(url, params, null);
+    }
+
+    /**
+     * get请求
+     *
+     * @param url    请求的url,不能为空
+     * @param params 请求的参数
+     * @return 响应对象的输入流
+     * @author :loulan
+     */
+    public static InputStream toInputStream(String url, Map<String, String> params) {
+        return toInputStream(url, params, null);
+    }
+
+    /**
+     * get请求
+     *
+     * @param url    请求的url,不能为空
+     * @param params 请求的参数
+     * @return 响应对象
+     * @author :loulan
+     */
+    public static Response request(String url, Map<String, String> params) {
+        return request(url, params, null);
+    }
+
+    /**
+     * get请求
+     *
      * @param url     请求的url,不能为空
      * @param params  请求的参数
      * @param headers 请求头

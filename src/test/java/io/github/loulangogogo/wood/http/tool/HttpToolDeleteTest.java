@@ -35,12 +35,18 @@ public class HttpToolDeleteTest {
         server.shutdown();
     }
 
+    /**
+     * 测试仅传入url时，toStr方法能正确返回响应体字符串
+     */
     @Test
     public void testToStr() throws IOException {
         server.enqueue(new MockResponse().setBody("deleted").setResponseCode(200));
         assertEquals("deleted", HttpToolDelete.toStr(baseUrl));
     }
 
+    /**
+     * 测试仅传入url时，request方法能正确返回响应对象且状态码为204
+     */
     @Test
     public void testRequest() throws IOException {
         server.enqueue(new MockResponse().setResponseCode(204));
@@ -49,6 +55,33 @@ public class HttpToolDeleteTest {
         }
     }
 
+    /**
+     * 测试传入params时，toStr方法能正确返回响应体字符串
+     */
+    @Test
+    public void testToStrWithParams() throws IOException {
+        server.enqueue(new MockResponse().setBody("deleted_with_params").setResponseCode(200));
+        Map<String, String> params = new HashMap<>();
+        params.put("force", "true");
+        assertEquals("deleted_with_params", HttpToolDelete.toStr(baseUrl, params));
+    }
+
+    /**
+     * 测试传入params时，request方法能正确返回响应对象
+     */
+    @Test
+    public void testRequestWithParams() throws IOException {
+        server.enqueue(new MockResponse().setResponseCode(200));
+        Map<String, String> params = new HashMap<>();
+        params.put("cascade", "true");
+        try (Response response = HttpToolDelete.request(baseUrl, params)) {
+            assertEquals(200, response.code());
+        }
+    }
+
+    /**
+     * 测试同时传入params和headers时，toStr方法能正确返回响应体字符串
+     */
     @Test
     public void testToStrWithParamsAndHeaders() throws IOException {
         server.enqueue(new MockResponse().setBody("gone").setResponseCode(200));
@@ -59,6 +92,9 @@ public class HttpToolDeleteTest {
         assertEquals("gone", HttpToolDelete.toStr(baseUrl, params, headers));
     }
 
+    /**
+     * 测试同时传入params和headers时，request方法能正确返回响应对象
+     */
     @Test
     public void testRequestWithParamsAndHeaders() throws IOException {
         server.enqueue(new MockResponse().setResponseCode(200));
@@ -67,6 +103,9 @@ public class HttpToolDeleteTest {
         }
     }
 
+    /**
+     * 测试传入超时时间和日志开关时，request方法能正确返回响应对象
+     */
     @Test
     public void testRequestWithTimeoutAndLog() throws IOException {
         server.enqueue(new MockResponse().setResponseCode(200));
