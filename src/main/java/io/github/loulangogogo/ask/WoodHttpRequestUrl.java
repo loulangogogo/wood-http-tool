@@ -2,6 +2,7 @@ package io.github.loulangogogo.ask;
 
 import io.github.loulangogogo.water.map.MapTool;
 import io.github.loulangogogo.water.tool.AssertTool;
+import io.github.loulangogogo.water.tool.ObjectTool;
 import okhttp3.HttpUrl;
 
 import java.util.Map;
@@ -33,15 +34,21 @@ class WoodHttpRequestUrl {
     public static HttpUrl createUrl(String url, Map<String, String> params) {
         AssertTool.notEmpty(url, "url不能为空");
 
-        // 解析url中的各个部分到对象
-        HttpUrl.Builder urlBuilder = null;
-        if (url.trim().toLowerCase().startsWith(HTTP_PROTOCOL) || url.trim().toLowerCase().startsWith(HTTPS_PROTOCOL)) {
-            // 如果url已经包含协议，则直接解析
-            urlBuilder = HttpUrl.parse(url).newBuilder();
+        String trimmedUrl = url.trim();
+        String lowerUrl = trimmedUrl.toLowerCase();
+        HttpUrl httpUrl = null;
+
+        if (lowerUrl.startsWith(HTTP_PROTOCOL) || lowerUrl.startsWith(HTTPS_PROTOCOL)) {
+            httpUrl = HttpUrl.parse(trimmedUrl);
         } else {
-            // 如果url没有默认的协议，则添加默认的协议http
-            urlBuilder = HttpUrl.parse(DEFAULT_PROTOCOL + url).newBuilder();
+            httpUrl = HttpUrl.parse(DEFAULT_PROTOCOL + trimmedUrl);
         }
+
+        if (ObjectTool.isNull(httpUrl)) {
+            throw new IllegalArgumentException("url格式无效: " + url);
+        }
+
+        HttpUrl.Builder urlBuilder = httpUrl.newBuilder();
 
         // 循环添加参数
         if (MapTool.isNotEmpty(params)) {
