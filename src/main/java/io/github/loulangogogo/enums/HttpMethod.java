@@ -7,5 +7,16 @@ package io.github.loulangogogo.enums;
  ** @since 8
  *********************************************************/
 public enum HttpMethod {
-    GET, POST, HEAD, PUT, DELETE, PATCH
+    /** GET请求方法 */
+    GET,
+    /** POST请求方法 */
+    POST,
+    /** HEAD请求方法 */
+    HEAD,
+    /** PUT请求方法 */
+    PUT,
+    /** DELETE请求方法 */
+    DELETE,
+    /** PATCH请求方法 */
+    PATCH
 }
